@@ -1,0 +1,17 @@
+﻿<Properties StartupConfiguration="{3F30DF23-BE2B-0831-CE42-F1D294C7B044}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Camera/CameraCtrl.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Common/LogOnSceneCtrl.cs" Line="22" Column="9" />
+      <File FileName="Assets/Scripts/Common/ResourcesMgr.cs" Line="106" Column="5" />
+      <File FileName="Assets/Scripts/Core/Singleton.cs" Line="23" Column="9" />
+      <File FileName="Assets/Scripts/Camera/CameraCtrl.cs" Line="22" Column="35" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.MMORPG PreferredExecutionTarget="Unity.Editor" />
+  <MultiItemStartupConfigurations />
+</Properties>
