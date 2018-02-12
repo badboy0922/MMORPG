@@ -6,6 +6,12 @@ using UnityEngine;
 public class RoleCtrl : MonoBehaviour
 {
     /// <summary>
+    /// 动画
+    /// </summary>
+    [SerializeField]
+    private Animator m_Animator;
+
+    /// <summary>
     /// 移动的目标位置
     /// </summary>
     private Vector3 m_TargetPos = Vector3.zero;
@@ -30,13 +36,17 @@ public class RoleCtrl : MonoBehaviour
     {
         m_CharacterController = GetComponent<CharacterController>();
 
-        if (CameraCtrl.Instance!=null)
+        if (CameraCtrl.Instance != null)
         {
             CameraCtrl.Instance.Init();
         }
-        FingerEvent.Instance.OnFingerDrag += OnFingerDrag;
-        FingerEvent.Instance.OnZoom += OnZoom;
-        FingerEvent.Instance.OnPlayerClickGround += OnPlayerClickGround;
+        if (FingerEvent.Instance != null)
+        {
+            FingerEvent.Instance.OnFingerDrag += OnFingerDrag;
+            FingerEvent.Instance.OnZoom += OnZoom;
+            FingerEvent.Instance.OnPlayerClickGround += OnPlayerClickGround;
+        }
+        m_Animator.SetBool("ToIdleNormal", true);
     }
 
     private void OnZoom(FingerEvent.ZoomType obj)
@@ -91,9 +101,12 @@ public class RoleCtrl : MonoBehaviour
 
     private void OnDestroy()
     {
-        FingerEvent.Instance.OnFingerDrag -= OnFingerDrag;
-        FingerEvent.Instance.OnZoom -= OnZoom;
-        FingerEvent.Instance.OnPlayerClickGround -= OnPlayerClickGround;
+        if (FingerEvent.Instance != null)
+        {
+            FingerEvent.Instance.OnFingerDrag -= OnFingerDrag;
+            FingerEvent.Instance.OnZoom -= OnZoom;
+            FingerEvent.Instance.OnPlayerClickGround -= OnPlayerClickGround;
+        }
     }
 
     void Update()
@@ -105,6 +118,19 @@ public class RoleCtrl : MonoBehaviour
         if (!m_CharacterController.isGrounded)
         {
             m_CharacterController.Move((transform.position + new Vector3(0, -1000, 0)) - transform.position);
+        }
+
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+
+        }
+        else if (Input.GetKeyUp(KeyCode.N))
+        {
+
+        }
+        else if (Input.GetKeyUp(KeyCode.A))
+        {
+
         }
 
         //如果目标不是远点 进行移动

@@ -35,7 +35,11 @@ public enum WindowUIType
     /// <summary>
     /// 注册
     /// </summary>
-    Reg
+    Reg,
+    /// <summary>
+    /// 角色信息窗口
+    /// </summary>
+    RoleInfo
 }
 #endregion
 

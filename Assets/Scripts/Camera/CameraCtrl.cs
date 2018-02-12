@@ -80,15 +80,15 @@ public class CameraCtrl : MonoBehaviour
         m_CameraZoomContainer.LookAt(pos);
     }
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 15f);
+    //void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, 15f);
 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, 14f);
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawWireSphere(transform.position, 14f);
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, 12f);
-    }
+    //    Gizmos.color = Color.green;
+    //    Gizmos.DrawWireSphere(transform.position, 12f);
+    //}
 }

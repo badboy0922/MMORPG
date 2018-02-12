@@ -12,7 +12,6 @@ using UnityEngine;
 /// </summary>
 public class UISceneLogOnCtrl : UISceneBase
 {
-
     protected override void OnStart()
     {
         base.OnAwake();
@@ -24,5 +23,4 @@ public class UISceneLogOnCtrl : UISceneBase
         yield return new WaitForSeconds(0.2f);
         GameObject obj = WindowUIMgr.Instance.OpenWindow(WindowUIType.LogOn);
     }
-
 }
