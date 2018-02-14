@@ -7,20 +7,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoleStateHurt : MonoBehaviour 
+/// <summary>
+/// 受伤状态
+/// </summary>
+public class RoleStateHurt : RoleStateAbstract
 {
-	void Awake () 
-	{
-		
-	}
-	
-	void Start () 
-	{
-		
-	}
-	
-	void Update () 
-	{
-		
-	}
+    /// <summary>
+    /// 构造方法
+    /// </summary>
+    /// <param name="roleFSMMgr">有限状态机管理器</param>
+    public RoleStateHurt(RoleFSMMgr roleFSMMgr) : base(roleFSMMgr)
+    {
+    }
+
+    /// <summary>
+    /// 实现基类 进入状态
+    /// </summary>
+    public override void OnEnter()
+    {
+        base.OnEnter();
+    }
+
+    /// <summary>
+    /// 实现基类 执行状态
+    /// </summary>
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+    }
+
+    /// <summary>
+    /// 实现基类 离开状态
+    /// </summary>
+    public override void OnLeave()
+    {
+        base.OnLeave();
+    }
 }

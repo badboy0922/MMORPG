@@ -7,20 +7,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IRoleAI : MonoBehaviour 
+/// <summary>
+/// 角色AI接口
+/// </summary>
+public interface IRoleAI
 {
-	void Awake () 
-	{
-		
-	}
-	
-	void Start () 
-	{
-		
-	}
-	
-	void Update () 
-	{
-		
-	}
+    /// <summary>
+    /// 执行AI
+    /// </summary>
+    void DoAI();
 }

@@ -3,9 +3,6 @@
 //Unity版本：5.6.4f1
 //备     注：
 //======================================================
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 #region SceneType 场景类型
 /// <summary>
@@ -105,3 +102,54 @@ public enum WindowShowStyle
 }
 #endregion
 
+#region RoleType 角色类型
+/// <summary>
+/// 角色类型
+/// </summary>
+public enum RoleType
+{
+    /// <summary>
+    /// 未设置
+    /// </summary>
+    None = 0,
+    /// <summary>
+    /// 当前玩家
+    /// </summary>
+    MainPlayer = 1,
+    /// <summary>
+    /// 怪
+    /// </summary>
+    Monster = 2
+}
+#endregion
+
+/// <summary>
+/// 角色状态
+/// </summary>
+public enum RoleState
+{
+    /// <summary>
+    /// 未设置
+    /// </summary>
+    None = 0,
+    /// <summary>
+    /// 待机
+    /// </summary>
+    Idle = 1,
+    /// <summary>
+    /// 跑
+    /// </summary>
+    Run = 2,
+    /// <summary>
+    /// 攻击
+    /// </summary>
+    Attack = 3,
+    /// <summary>
+    /// 受伤
+    /// </summary>
+    Hurt = 4,
+    /// <summary>
+    /// 死亡
+    /// </summary>
+    Die = 5
+}
