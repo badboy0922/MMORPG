@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 角色控制器
+/// </summary>
 public class RoleCtrl : MonoBehaviour
 {
     /// <summary>
@@ -109,6 +112,17 @@ public class RoleCtrl : MonoBehaviour
         }
     }
 
+    private void Reset()
+    {
+        m_Animator.SetBool("ToIdleNormal", false);
+        m_Animator.SetBool("ToRun", false);
+        m_Animator.SetBool("ToHurt", false);
+        m_Animator.SetBool("ToDie", false);
+        m_Animator.SetBool("ToIdleFight", false);
+        m_Animator.SetInteger("ToPhyAttack", 0);
+
+    }
+
     void Update()
     {
         if (m_CharacterController == null) return;
@@ -120,17 +134,52 @@ public class RoleCtrl : MonoBehaviour
             m_CharacterController.Move((transform.position + new Vector3(0, -1000, 0)) - transform.position);
         }
 
+        AnimatorStateInfo info = m_Animator.GetCurrentAnimatorStateInfo(0);
+        if (info.IsName("Idle_Normal"))
+        {
+            m_Animator.SetInteger("CurrState", 1);
+        }
+        else if (info.IsName("Idle_Fight"))
+        {
+            m_Animator.SetInteger("CurrState", 2);
+        }
+        else if (info.IsName("Run"))
+        {
+            m_Animator.SetInteger("CurrState", 3);
+        }
+        else if (info.IsName("Hurt"))
+        {
+            m_Animator.SetInteger("CurrState", 4);
+        }
+        else if (info.IsName("Die"))
+        {
+            m_Animator.SetInteger("CurrState", 5);
+        }
+        else if (info.IsName("PhyAttack1"))
+        {
+            m_Animator.SetInteger("CurrState", 6);
+
+            if (info.normalizedTime > 1)
+            {
+                this.Reset();
+                m_Animator.SetBool("ToIdleNormal", true);
+            }
+        }
+
         if (Input.GetKeyUp(KeyCode.R))
         {
-
+            this.Reset();
+            m_Animator.SetBool("ToRun", true);
         }
         else if (Input.GetKeyUp(KeyCode.N))
         {
-
+            this.Reset();
+            m_Animator.SetBool("ToIdleNormal", true);
         }
         else if (Input.GetKeyUp(KeyCode.A))
         {
-
+            this.Reset();
+            m_Animator.SetInteger("ToPhyAttack", 1);
         }
 
         //如果目标不是远点 进行移动
