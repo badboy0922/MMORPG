@@ -87,8 +87,8 @@ public class RoleCtrl : MonoBehaviour
     void Update()
     {
         //角色必须有AI
-        if (CurrRoleAI == null) return;
-        CurrRoleAI.DoAI();
+        //if (CurrRoleAI == null) return;
+        //CurrRoleAI.DoAI();
 
         if (CurrRoleFSMMgr != null)
             CurrRoleFSMMgr.OnUpdate();
@@ -100,54 +100,7 @@ public class RoleCtrl : MonoBehaviour
         {
             m_CharacterController.Move((transform.position + new Vector3(0, -1000, 0)) - transform.position);
         }
-
-        //AnimatorStateInfo info = m_Animator.GetCurrentAnimatorStateInfo(0);
-        //if (info.IsName("Idle_Normal"))
-        //{
-        //    m_Animator.SetInteger("CurrState", 1);
-        //}
-        //else if (info.IsName("Idle_Fight"))
-        //{
-        //    m_Animator.SetInteger("CurrState", 2);
-        //}
-        //else if (info.IsName("Run"))
-        //{
-        //    m_Animator.SetInteger("CurrState", 3);
-        //}
-        //else if (info.IsName("Hurt"))
-        //{
-        //    m_Animator.SetInteger("CurrState", 4);
-        //}
-        //else if (info.IsName("Die"))
-        //{
-        //    m_Animator.SetInteger("CurrState", 5);
-        //}
-        //else if (info.IsName("PhyAttack1"))
-        //{
-        //    m_Animator.SetInteger("CurrState", 6);
-
-        //    if (info.normalizedTime > 1)
-        //    {
-        //        this.Reset();
-        //        m_Animator.SetBool("ToIdleNormal", true);
-        //    }
-        //}
-
-        //if (Input.GetKeyUp(KeyCode.R))
-        //{
-        //    this.Reset();
-        //    m_Animator.SetBool("ToRun", true);
-        //}
-        //else if (Input.GetKeyUp(KeyCode.N))
-        //{
-        //    this.Reset();
-        //    m_Animator.SetBool("ToIdleNormal", true);
-        //}
-        //else if (Input.GetKeyUp(KeyCode.A))
-        //{
-        //    this.Reset();
-        //    m_Animator.SetInteger("ToPhyAttack", 1);
-        //}
+        
 
         //如果目标不是远点 进行移动
         if (m_TargetPos != Vector3.zero)
@@ -170,7 +123,56 @@ public class RoleCtrl : MonoBehaviour
         }
 
         CameraAutoFllow();
+
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            ToRun();
+        }
+        else if (Input.GetKeyUp(KeyCode.N))
+        {
+            ToIdle();
+        }
+        else if (Input.GetKeyUp(KeyCode.D))
+        {
+            ToDie();
+        }
+        else if (Input.GetKeyUp(KeyCode.A))
+        {
+            ToAttack();
+        }
+        else if (Input.GetKeyUp(KeyCode.H))
+        {
+            ToHurt();
+        }
+
     }
+
+    #region 控制角色方法
+    public void ToIdle()
+    {
+        CurrRoleFSMMgr.ChangeState(RoleState.Idle);
+    }
+
+    public void ToRun()
+    {
+        CurrRoleFSMMgr.ChangeState(RoleState.Run);
+    }
+
+    public void ToAttack()
+    {
+        CurrRoleFSMMgr.ChangeState(RoleState.Attack);
+    }
+
+    public void ToHurt()
+    {
+        CurrRoleFSMMgr.ChangeState(RoleState.Hurt);
+    }
+
+    public void ToDie()
+    {
+        CurrRoleFSMMgr.ChangeState(RoleState.Die);
+    }
+    #endregion
 
     #region OnZoom OnZoom
     /// <summary>
@@ -253,18 +255,6 @@ public class RoleCtrl : MonoBehaviour
         }
     }
     #endregion
-
-    private void Reset()
-    {
-        Animator.SetBool("ToIdleNormal", false);
-        Animator.SetBool("ToRun", false);
-        Animator.SetBool("ToHurt", false);
-        Animator.SetBool("ToDie", false);
-        Animator.SetBool("ToIdleFight", false);
-        Animator.SetInteger("ToPhyAttack", 0);
-
-    }
-
 
     #region CameraAutoFllow 摄像机自动跟随
     /// <summary>

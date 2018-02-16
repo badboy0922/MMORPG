@@ -26,6 +26,8 @@ public class RoleStateHurt : RoleStateAbstract
     public override void OnEnter()
     {
         base.OnEnter();
+
+        CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetBool(ToAnimatorCondition.ToHurt.ToString(), true);
     }
 
     /// <summary>
@@ -34,6 +36,19 @@ public class RoleStateHurt : RoleStateAbstract
     public override void OnUpdate()
     {
         base.OnUpdate();
+
+        CurrAnimatorStateInfo = CurrRoleFSMMgr.CurrRoleCtrl.Animator.GetCurrentAnimatorStateInfo(0);
+
+        if (CurrAnimatorStateInfo.IsName(RoleAnimatorName.Hurt.ToString()))
+        {
+            CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.CurrState.ToString(), (int)RoleState.Hurt);
+
+            //如果动画执行了一遍，就切换到待机
+            if (CurrAnimatorStateInfo.normalizedTime > 1)
+            {
+                CurrRoleFSMMgr.CurrRoleCtrl.ToIdle();
+            }
+        }
     }
 
     /// <summary>
@@ -42,5 +57,7 @@ public class RoleStateHurt : RoleStateAbstract
     public override void OnLeave()
     {
         base.OnLeave();
+
+        CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetBool(ToAnimatorCondition.ToHurt.ToString(), false);
     }
 }

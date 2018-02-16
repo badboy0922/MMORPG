@@ -60,7 +60,7 @@ public class RoleFSMMgr
         {
             m_CurrRoleState.OnUpdate();
         }
-    } 
+    }
     #endregion
 
     /// <summary>
@@ -72,7 +72,7 @@ public class RoleFSMMgr
         if (CurrRoleStateEnum == newState) return;
 
         //调用以前状态的离开方法
-        if (CurrRoleStateEnum != newState)
+        if (m_CurrRoleState != null)
             m_CurrRoleState.OnLeave();
 
         //更改当前状态枚举

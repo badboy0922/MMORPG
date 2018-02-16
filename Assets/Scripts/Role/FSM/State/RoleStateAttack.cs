@@ -26,6 +26,8 @@ public class RoleStateAttack : RoleStateAbstract
     public override void OnEnter()
     {
         base.OnEnter();
+
+        CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.ToPhyAttack.ToString(), 1);
     }
 
     /// <summary>
@@ -34,6 +36,19 @@ public class RoleStateAttack : RoleStateAbstract
     public override void OnUpdate()
     {
         base.OnUpdate();
+
+        CurrAnimatorStateInfo = CurrRoleFSMMgr.CurrRoleCtrl.Animator.GetCurrentAnimatorStateInfo(0);
+
+        if (CurrAnimatorStateInfo.IsName(RoleAnimatorName.PhyAttack1.ToString()))
+        {
+            CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.CurrState.ToString(), (int)RoleState.Attack);
+
+            //如果动画执行了一遍，就切换到待机
+            if (CurrAnimatorStateInfo.normalizedTime > 1)
+            {
+                CurrRoleFSMMgr.CurrRoleCtrl.ToIdle();
+            }
+        }
     }
 
     /// <summary>
@@ -42,5 +57,6 @@ public class RoleStateAttack : RoleStateAbstract
     public override void OnLeave()
     {
         base.OnLeave();
+        CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.ToPhyAttack.ToString(), 0);
     }
 }

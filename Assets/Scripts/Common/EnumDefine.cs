@@ -123,6 +123,7 @@ public enum RoleType
 }
 #endregion
 
+#region RoleState 角色状态
 /// <summary>
 /// 角色状态
 /// </summary>
@@ -152,4 +153,34 @@ public enum RoleState
     /// 死亡
     /// </summary>
     Die = 5
+}
+#endregion
+
+#region RoleAnimatorName 角色动画状态名称
+/// <summary>
+/// 角色动画状态名称
+/// </summary>
+public enum RoleAnimatorName
+{
+    Idle_Normal,
+    Idle_Fight,
+    Run,
+    Hurt,
+    Die,
+    PhyAttack1,
+    PhyAttack2,
+    PhyAttack3
+} 
+#endregion
+
+
+public enum ToAnimatorCondition
+{
+    ToIdleNormal,
+    ToIdleFight,
+    ToRun,
+    ToHurt,
+    ToDie,
+    ToPhyAttack,
+    CurrState
 }
