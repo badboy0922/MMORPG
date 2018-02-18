@@ -12,6 +12,20 @@ using UnityEngine;
 /// </summary>
 public class RoleMonsterAI : IRoleAI
 {
+    /// <summary>
+    /// 当前角色控制器
+    /// </summary>
+    public RoleCtrl CurrRole { get; set; }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="roleCtrl"></param>
+    public RoleMonsterAI(RoleCtrl roleCtrl)
+    {
+        CurrRole = roleCtrl;
+    }
+
     public void DoAI()
     {
         //执行AI

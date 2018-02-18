@@ -12,7 +12,7 @@ public class RoleInfoBase
     /// <summary>
     /// 角色服务器编号 
     /// </summary>
-    public int RoleServerID;
+    public long RoleServerID;
 
     /// <summary>
     /// 角色编号

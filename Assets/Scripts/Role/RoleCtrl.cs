@@ -8,6 +8,17 @@ public class RoleCtrl : MonoBehaviour
 
     #region 成员变量或属性
     /// <summary>
+    /// 昵称挂点
+    /// </summary>
+    [SerializeField]
+    private Transform m_HeadBarPos;
+
+    /// <summary>
+    /// 头顶UI条 
+    /// </summary>
+    private GameObject m_HeadBar;
+
+    /// <summary>
     /// 动画
     /// </summary>
     [SerializeField]
@@ -16,22 +27,20 @@ public class RoleCtrl : MonoBehaviour
     /// <summary>
     /// 移动的目标位置
     /// </summary>
-    private Vector3 m_TargetPos = Vector3.zero;
+    [HideInInspector]
+    public Vector3 TargetPos = Vector3.zero;
 
-    private CharacterController m_CharacterController;
+    /// <summary>
+    /// 控制器
+    /// </summary>
+    [HideInInspector]
+    public CharacterController CharacterController;
 
+    /// <summary>
+    /// 转身速度
+    /// </summary>
     [SerializeField]
-    private float m_Speed = 10f;
-
-    /// <summary>
-    /// 转身的速度
-    /// </summary>
-    private float m_RotationSpeed = 0.2f;
-
-    /// <summary>
-    /// 转身的方向
-    /// </summary>
-    private Quaternion m_TargetQuaternion;
+    public float Speed = 10f;
 
     /// <summary>
     /// 当前角色类型
@@ -48,10 +57,12 @@ public class RoleCtrl : MonoBehaviour
     /// </summary>
     public IRoleAI CurrRoleAI = null;
 
-     /// <summary>
-     /// 当前角色有限状态机管理器
-     /// </summary>
+    /// <summary>
+    /// 当前角色有限状态机管理器
+    /// </summary>
     public RoleFSMMgr CurrRoleFSMMgr = null;
+
+    private RoleHeadBarCtrl roleHeadBarCtrl = null;
     #endregion
 
     /// <summary>
@@ -60,7 +71,7 @@ public class RoleCtrl : MonoBehaviour
     /// <param name="roleType">角色类型</param>
     /// <param name="roleInfo">角色信息</param>
     /// <param name="ai">角色AI</param>
-    public void Init(RoleType roleType, RoleInfoBase roleInfo,IRoleAI ai)
+    public void Init(RoleType roleType, RoleInfoBase roleInfo, IRoleAI ai)
     {
         CurrRoleType = roleType;
         CurrRoleInfo = roleInfo;
@@ -69,82 +80,61 @@ public class RoleCtrl : MonoBehaviour
 
     void Start()
     {
-        m_CharacterController = GetComponent<CharacterController>();
+        CharacterController = GetComponent<CharacterController>();
+        if (CurrRoleType == RoleType.MainPlayer)
+        {
+            if (CameraCtrl.Instance != null)
+            {
+                CameraCtrl.Instance.Init();
+            }
+        }
 
-        if (CameraCtrl.Instance != null)
-        {
-            CameraCtrl.Instance.Init();
-        }
-        if (FingerEvent.Instance != null)
-        {
-            FingerEvent.Instance.OnFingerDrag += OnFingerDrag;
-            FingerEvent.Instance.OnZoom += OnZoom;
-            FingerEvent.Instance.OnPlayerClickGround += OnPlayerClickGround;
-        }
         CurrRoleFSMMgr = new RoleFSMMgr(this);
+        ToIdle();
+        InitHeadBar();
     }
 
     void Update()
     {
         //角色必须有AI
-        //if (CurrRoleAI == null) return;
-        //CurrRoleAI.DoAI();
+        if (CurrRoleAI == null) return;
+        CurrRoleAI.DoAI();
 
         if (CurrRoleFSMMgr != null)
             CurrRoleFSMMgr.OnUpdate();
 
-        if (m_CharacterController == null) return;
+        if (CharacterController == null) return;
 
         //让角色贴着地面
-        if (!m_CharacterController.isGrounded)
+        if (!CharacterController.isGrounded)
         {
-            m_CharacterController.Move((transform.position + new Vector3(0, -1000, 0)) - transform.position);
-        }
-        
-
-        //如果目标不是远点 进行移动
-        if (m_TargetPos != Vector3.zero)
-        {
-            if (Vector3.Distance(m_TargetPos, transform.position) > 0.1f)
-            {
-                Vector3 direction = m_TargetPos - transform.position;
-                direction = direction.normalized;//归一化
-                direction = direction * Time.deltaTime * m_Speed;
-                //transform.LookAt(new Vector3(m_TargetPos.x, transform.position.y, m_TargetPos.z));
-                //让角色转身
-                if (m_RotationSpeed <= 1)
-                {
-                    m_RotationSpeed += 5f * Time.deltaTime;
-                    m_TargetQuaternion = Quaternion.LookRotation(direction);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, m_TargetQuaternion, m_RotationSpeed);
-                }
-                m_CharacterController.Move(direction);
-            }
+            CharacterController.Move((transform.position + new Vector3(0, -1000, 0)) - transform.position);
         }
 
-        CameraAutoFllow();
-
-        if (Input.GetKeyUp(KeyCode.R))
+        if (CurrRoleType == RoleType.MainPlayer)
         {
-            ToRun();
-        }
-        else if (Input.GetKeyUp(KeyCode.N))
-        {
-            ToIdle();
-        }
-        else if (Input.GetKeyUp(KeyCode.D))
-        {
-            ToDie();
-        }
-        else if (Input.GetKeyUp(KeyCode.A))
-        {
-            ToAttack();
-        }
-        else if (Input.GetKeyUp(KeyCode.H))
-        {
-            ToHurt();
+            CameraAutoFllow();
         }
 
+    }
+
+    /// <summary>
+    /// 初始化头顶UI条
+    /// </summary>
+    private void InitHeadBar()
+    {
+        if (RoleHeadBarRoot.Instance == null) return;
+        if (CurrRoleInfo == null) return;
+        if (m_HeadBarPos == null) return;
+
+        //克隆预设
+        m_HeadBar = ResourcesMgr.Instance.Load(ResourcesMgr.ResourceType.UIOther, "RoleHeadBar");
+        m_HeadBar.transform.parent = RoleHeadBarRoot.Instance.gameObject.transform;
+        m_HeadBar.transform.localScale = Vector3.one;
+
+        roleHeadBarCtrl = m_HeadBar.GetComponent<RoleHeadBarCtrl>();
+        //给预设赋值
+        roleHeadBarCtrl.Init(m_HeadBarPos, CurrRoleInfo.NickName);
     }
 
     #region 控制角色方法
@@ -153,8 +143,11 @@ public class RoleCtrl : MonoBehaviour
         CurrRoleFSMMgr.ChangeState(RoleState.Idle);
     }
 
-    public void ToRun()
+    public void MoveTo(Vector3 targetPos)
     {
+        //如果目标不是远点 进行移动
+        if (targetPos == Vector3.zero) return;
+        TargetPos = targetPos;
         CurrRoleFSMMgr.ChangeState(RoleState.Run);
     }
 
@@ -165,6 +158,8 @@ public class RoleCtrl : MonoBehaviour
 
     public void ToHurt()
     {
+        roleHeadBarCtrl.SetHUDText(10);
+
         CurrRoleFSMMgr.ChangeState(RoleState.Hurt);
     }
 
@@ -174,85 +169,13 @@ public class RoleCtrl : MonoBehaviour
     }
     #endregion
 
-    #region OnZoom OnZoom
-    /// <summary>
-    /// 摄像机缩放
-    /// </summary>
-    /// <param name="obj"></param>
-    private void OnZoom(FingerEvent.ZoomType obj)
-    {
-        switch (obj)
-        {
-            case FingerEvent.ZoomType.In:
-                CameraCtrl.Instance.SetCameraZoom(0);
-                break;
-            case FingerEvent.ZoomType.Out:
-                CameraCtrl.Instance.SetCameraZoom(1);
-                break;
-            default:
-                break;
-        }
-    }
-    #endregion
-
-    #region OnPlayerClickGround 玩家点击地面
-    /// <summary>
-    /// 玩家点击地面
-    /// </summary>
-    private void OnPlayerClickGround()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo))
-        {
-            if (hitInfo.collider.gameObject.name.Equals("Ground", System.StringComparison.CurrentCultureIgnoreCase))
-            {
-                m_TargetPos = hitInfo.point;
-                m_RotationSpeed = 0;
-            }
-        }
-    }
-    #endregion
-
-    #region OnFingerDrag 手指滑动
-    /// <summary>
-    /// 手指滑动
-    /// </summary>
-    /// <param name="obj"></param>
-    private void OnFingerDrag(FingerEvent.FingerDir obj)
-    {
-        switch (obj)
-        {
-            case FingerEvent.FingerDir.Left:
-                CameraCtrl.Instance.SetCameraRotate(0);
-                break;
-            case FingerEvent.FingerDir.Right:
-                CameraCtrl.Instance.SetCameraRotate(1);
-                break;
-            case FingerEvent.FingerDir.Up:
-                CameraCtrl.Instance.SetCameraUpAndDown(1);
-                break;
-            case FingerEvent.FingerDir.Down:
-                CameraCtrl.Instance.SetCameraUpAndDown(0);
-                break;
-            default:
-                break;
-        }
-    }
-    #endregion
-
     #region OnDestroy 销毁
     /// <summary>
     /// 销毁
     /// </summary>
     private void OnDestroy()
     {
-        if (FingerEvent.Instance != null)
-        {
-            FingerEvent.Instance.OnFingerDrag -= OnFingerDrag;
-            FingerEvent.Instance.OnZoom -= OnZoom;
-            FingerEvent.Instance.OnPlayerClickGround -= OnPlayerClickGround;
-        }
+
     }
     #endregion
 
@@ -266,31 +189,6 @@ public class RoleCtrl : MonoBehaviour
 
         CameraCtrl.Instance.transform.position = gameObject.transform.position;
         CameraCtrl.Instance.AutoLookAt(gameObject.transform.position);
-
-        //if (Input.GetKey(KeyCode.A))
-        //{
-        //    CameraCtrl.Instance.SetCameraRotate(0);
-        //}
-        //else if (Input.GetKey(KeyCode.D))
-        //{
-        //    CameraCtrl.Instance.SetCameraRotate(1);
-        //}
-        //else if (Input.GetKey(KeyCode.W))
-        //{
-        //    CameraCtrl.Instance.SetCameraUpAndDown(0);
-        //}
-        //else if (Input.GetKey(KeyCode.S))
-        //{
-        //    CameraCtrl.Instance.SetCameraUpAndDown(1);
-        //}
-        //else if (Input.GetKey(KeyCode.I))
-        //{
-        //    CameraCtrl.Instance.SetCameraZoom(0);
-        //}
-        //else if (Input.GetKey(KeyCode.L))
-        //{
-        //    CameraCtrl.Instance.SetCameraZoom(1 );
-        //}
     }
     #endregion
 }

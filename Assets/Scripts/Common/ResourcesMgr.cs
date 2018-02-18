@@ -26,7 +26,11 @@ public class ResourcesMgr : Singleton<ResourcesMgr>
         /// <summary>
         /// 特效
         /// </summary>
-        Effect
+        Effect,
+        /// <summary>
+        /// 其他
+        /// </summary>
+        UIOther
     }
     #endregion
 
@@ -70,6 +74,9 @@ public class ResourcesMgr : Singleton<ResourcesMgr>
                     break;
                 case ResourceType.Effect:
                     sbr.Append("EffectPrefab/");
+                    break;
+                case ResourceType.UIOther:
+                    sbr.Append("UIPrefab/UIOther/");
                     break;
                 default:
                     break;

@@ -13,6 +13,11 @@ using UnityEngine;
 public interface IRoleAI
 {
     /// <summary>
+    /// 当前控制的角色
+    /// </summary>
+    RoleCtrl CurrRole { get; set; }
+
+    /// <summary>
     /// 执行AI
     /// </summary>
     void DoAI();

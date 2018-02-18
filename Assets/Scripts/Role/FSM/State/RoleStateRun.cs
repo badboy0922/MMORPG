@@ -13,6 +13,16 @@ using UnityEngine;
 public class RoleStateRun : RoleStateAbstract
 {
     /// <summary>
+    /// 转身的速度
+    /// </summary>
+    private float m_RotationSpeed = 0.2f;
+
+    /// <summary>
+    /// 转身的方向
+    /// </summary>
+    private Quaternion m_TargetQuaternion;
+
+    /// <summary>
     /// 构造方法
     /// </summary>
     /// <param name="roleFSMMgr">有限状态机管理器</param>
@@ -27,6 +37,7 @@ public class RoleStateRun : RoleStateAbstract
     {
         base.OnEnter();
 
+        m_RotationSpeed = 0;
         CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetBool(ToAnimatorCondition.ToRun.ToString(), true);
     }
 
@@ -42,6 +53,37 @@ public class RoleStateRun : RoleStateAbstract
         if (CurrAnimatorStateInfo.IsName(RoleAnimatorName.Run.ToString()))
         {
             CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.CurrState.ToString(), (int)RoleState.Run);
+        }
+        else
+        {
+            CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.CurrState.ToString(), 0);
+        }
+
+        //if (Vector3.Distance(CurrRoleFSMMgr.CurrRoleCtrl.TargetPos, CurrRoleFSMMgr.CurrRoleCtrl.transform.position) > 0.1f)
+        if(Vector3.Distance(new Vector3(CurrRoleFSMMgr.CurrRoleCtrl.TargetPos.x, 0, CurrRoleFSMMgr.CurrRoleCtrl.TargetPos.z), new Vector3(CurrRoleFSMMgr.CurrRoleCtrl.transform.position.x, 0, CurrRoleFSMMgr.CurrRoleCtrl.transform.position.z)) > 0.1f)
+        {
+            Vector3 direction = CurrRoleFSMMgr.CurrRoleCtrl.TargetPos - CurrRoleFSMMgr.CurrRoleCtrl.transform.position;
+            direction = direction.normalized;//归一化
+            direction = direction * Time.deltaTime * CurrRoleFSMMgr.CurrRoleCtrl.Speed;
+            direction.y = 0;
+
+            //让角色转身
+            if (m_RotationSpeed <= 1)
+            {
+                m_RotationSpeed += 10f * Time.deltaTime;
+                m_TargetQuaternion = Quaternion.LookRotation(direction);
+                CurrRoleFSMMgr.CurrRoleCtrl.transform.rotation = Quaternion.Lerp(CurrRoleFSMMgr.CurrRoleCtrl.transform.rotation, m_TargetQuaternion, m_RotationSpeed);
+
+                if (Quaternion.Angle(CurrRoleFSMMgr.CurrRoleCtrl.transform.rotation, m_TargetQuaternion) < 1)
+                {
+                    m_RotationSpeed = 0;
+                }
+            }
+            CurrRoleFSMMgr.CurrRoleCtrl.CharacterController.Move(direction);
+        }
+        else if(Vector3.Distance(CurrRoleFSMMgr.CurrRoleCtrl.TargetPos, CurrRoleFSMMgr.CurrRoleCtrl.transform.position) < 0.1f)
+        {
+            CurrRoleFSMMgr.CurrRoleCtrl.ToIdle();
         }
     }
 

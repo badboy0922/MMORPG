@@ -122,6 +122,14 @@
     <Compile Include="Assets\FingerGestures\Toolbox\TBTap.cs" />
     <Compile Include="Assets\FingerGestures\Utils\GestureStateTracker.cs" />
     <Compile Include="Assets\FingerGestures\Utils\MoveToFinger.cs" />
+    <Compile Include="Assets\HUD Text\Examples\Scripts\ChatManager.cs" />
+    <Compile Include="Assets\HUD Text\Examples\Scripts\ChatParticipant.cs" />
+    <Compile Include="Assets\HUD Text\Examples\Scripts\ColliderDisplayText.cs" />
+    <Compile Include="Assets\HUD Text\Examples\Scripts\HUDRoot.cs" />
+    <Compile Include="Assets\HUD Text\Examples\Scripts\LightFlicker.cs" />
+    <Compile Include="Assets\HUD Text\Examples\Scripts\Rotate.cs" />
+    <Compile Include="Assets\HUD Text\Scripts\HUDText.cs" />
+    <Compile Include="Assets\HUD Text\Scripts\UIFollowTarget.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
     <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\UICursor.cs" />
@@ -283,6 +291,7 @@
     <Compile Include="Assets\Scripts\Role\FSM\State\RoleStateIdle.cs" />
     <Compile Include="Assets\Scripts\Role\FSM\State\RoleStateRun.cs" />
     <Compile Include="Assets\Scripts\Role\RoleCtrl.cs" />
+    <Compile Include="Assets\Scripts\Role\RoleHeadBarCtrl.cs" />
     <Compile Include="Assets\Scripts\Role\RoleInfo\RoleInfoBase.cs" />
     <Compile Include="Assets\Scripts\Role\RoleInfo\RoleInfoMainPlayer.cs" />
     <Compile Include="Assets\Scripts\Role\RoleInfo\RoleInfoMonster.cs" />
@@ -291,8 +300,10 @@
     <Compile Include="Assets\Scripts\SceneCtrl\InitSceneCtrl.cs" />
     <Compile Include="Assets\Scripts\SceneCtrl\LoadingSceneCtrl.cs" />
     <Compile Include="Assets\Scripts\SceneCtrl\LogOnSceneCtrl.cs" />
+    <Compile Include="Assets\Scripts\SceneCtrl\MonsterAbout\MonsterCreatPoint.cs" />
     <Compile Include="Assets\Scripts\Test\BoxCtrl.cs" />
     <Compile Include="Assets\Scripts\UI\LayerUIMgr.cs" />
+    <Compile Include="Assets\Scripts\UI\Other\RoleHeadBarRoot.cs" />
     <Compile Include="Assets\Scripts\UI\SceneUICtrl\UISceneCityCtrl.cs" />
     <Compile Include="Assets\Scripts\UI\SceneUICtrl\UISceneLoadingCtrl.cs" />
     <Compile Include="Assets\Scripts\UI\SceneUICtrl\UISceneLogOnCtrl.cs" />
@@ -312,6 +323,9 @@
     <Compile Include="Assets\T4M\Tutorial\Scripts\WaypointCam.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\HUD Text\Examples\Atlases\Arimo20.txt" />
+    <None Include="Assets\HUD Text\Examples\Atlases\Large.txt" />
+    <None Include="Assets\HUD Text\ReadMe - 1.11.txt" />
     <None Include="Assets\NGUI\Examples\Atlases\Fantasy\Fantasy Font - Normal.txt" />
     <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
     <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Normal.txt" />

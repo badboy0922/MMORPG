@@ -48,7 +48,7 @@ public class CameraCtrl : MonoBehaviour
     /// <param name="type">0=左 1=右</param>
     public void SetCameraRotate(int type)
     {
-        transform.Rotate(0, 40 * Time.deltaTime * (type == 0 ? -1 : 1), 0);
+        transform.Rotate(0, 80 * Time.deltaTime * (type == 0 ? -1 : 1), 0);
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public class CameraCtrl : MonoBehaviour
     /// <param name="type">0=上 1=下</param>
     public void SetCameraUpAndDown(int type)
     {
-        m_CamereUpAndDown.transform.Rotate(0, 0, 30 * Time.deltaTime * (type == 1 ? -1 : 1));
+        m_CamereUpAndDown.transform.Rotate(0, 0, 60 * Time.deltaTime * (type == 1 ? -1 : 1));
         m_CamereUpAndDown.localEulerAngles = new Vector3(0, 0, Mathf.Clamp(m_CamereUpAndDown.localEulerAngles.z, 35f, 80f));
     }
 
