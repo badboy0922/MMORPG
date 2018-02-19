@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoleHeadBarCtrl : MonoBehaviour 
+public class RoleHeadBarCtrl : MonoBehaviour
 {
     /// <summary>
     /// 昵称
@@ -22,22 +22,28 @@ public class RoleHeadBarCtrl : MonoBehaviour
     private HUDText hudText;
 
     /// <summary>
+    /// 血条
+    /// </summary>
+    [SerializeField]
+    private UISlider bpHP;
+
+    /// <summary>
     /// 对齐的目标点
     /// </summary>
     private Transform m_Target;
 
-	void Awake () 
-	{
-		
-	}
-	
-	void Start () 
-	{
-		
-	}
-	
-	void Update () 
-	{
+    void Awake()
+    {
+
+    }
+
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
         if (Camera.main == null || UICamera.mainCamera == null) return;
         //世界坐标点转换为视口坐标点
         Vector3 pos = Camera.main.WorldToViewportPoint(m_Target.position);
@@ -46,12 +52,20 @@ public class RoleHeadBarCtrl : MonoBehaviour
         Vector3 uiPos = UICamera.mainCamera.ViewportToWorldPoint(pos);
 
         gameObject.transform.position = uiPos;
-	}
+    }
 
-    public void Init(Transform target,string nickName)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="nickName"></param>
+    /// <param name="isShowHPBar">是否显示血条</param>
+    public void Init(Transform target, string nickName, bool isShowHPBar = false)
     {
         m_Target = target;
         lblNickName.text = nickName;
+
+        NGUITools.SetActive(bpHP.gameObject, isShowHPBar);
     }
 
     /// <summary>

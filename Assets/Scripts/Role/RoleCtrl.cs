@@ -134,7 +134,7 @@ public class RoleCtrl : MonoBehaviour
 
         roleHeadBarCtrl = m_HeadBar.GetComponent<RoleHeadBarCtrl>();
         //给预设赋值
-        roleHeadBarCtrl.Init(m_HeadBarPos, CurrRoleInfo.NickName);
+        roleHeadBarCtrl.Init(m_HeadBarPos, CurrRoleInfo.NickName, isShowHPBar: (CurrRoleType == RoleType.MainPlayer ? false : true));
     }
 
     #region 控制角色方法
