@@ -20,7 +20,7 @@ public abstract class RoleStateAbstract
     /// <summary>
     /// 当前动画状态信息
     /// </summary>
-    public AnimatorStateInfo CurrAnimatorStateInfo { get; set; }
+    public AnimatorStateInfo CurrRoleAnimatorStateInfo { get; set; }
 
     /// <summary>
     /// 构造函数

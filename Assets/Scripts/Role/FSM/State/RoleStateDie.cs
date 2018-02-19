@@ -37,9 +37,9 @@ public class RoleStateDie : RoleStateAbstract
     {
         base.OnUpdate();
 
-        CurrAnimatorStateInfo = CurrRoleFSMMgr.CurrRoleCtrl.Animator.GetCurrentAnimatorStateInfo(0);
+        CurrRoleAnimatorStateInfo = CurrRoleFSMMgr.CurrRoleCtrl.Animator.GetCurrentAnimatorStateInfo(0);
 
-        if (CurrAnimatorStateInfo.IsName(RoleAnimatorName.Die.ToString()))
+        if (CurrRoleAnimatorStateInfo.IsName(RoleAnimatorName.Die.ToString()))
         {
             CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.CurrState.ToString(), (int)RoleState.Die);
         }

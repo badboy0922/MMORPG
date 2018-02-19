@@ -37,9 +37,9 @@ public class RoleStateIdle : RoleStateAbstract
     {
         base.OnUpdate();
 
-        CurrAnimatorStateInfo = CurrRoleFSMMgr.CurrRoleCtrl.Animator.GetCurrentAnimatorStateInfo(0);
+        CurrRoleAnimatorStateInfo = CurrRoleFSMMgr.CurrRoleCtrl.Animator.GetCurrentAnimatorStateInfo(0);
 
-        if (CurrAnimatorStateInfo.IsName(RoleAnimatorName.Idle_Fight.ToString()))
+        if (CurrRoleAnimatorStateInfo.IsName(RoleAnimatorName.Idle_Fight.ToString()))
         {
             CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.CurrState.ToString(), (int)RoleState.Idle);
         }

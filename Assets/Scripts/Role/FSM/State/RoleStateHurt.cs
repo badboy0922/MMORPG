@@ -37,14 +37,14 @@ public class RoleStateHurt : RoleStateAbstract
     {
         base.OnUpdate();
 
-        CurrAnimatorStateInfo = CurrRoleFSMMgr.CurrRoleCtrl.Animator.GetCurrentAnimatorStateInfo(0);
+        CurrRoleAnimatorStateInfo = CurrRoleFSMMgr.CurrRoleCtrl.Animator.GetCurrentAnimatorStateInfo(0);
 
-        if (CurrAnimatorStateInfo.IsName(RoleAnimatorName.Hurt.ToString()))
+        if (CurrRoleAnimatorStateInfo.IsName(RoleAnimatorName.Hurt.ToString()))
         {
             CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.CurrState.ToString(), (int)RoleState.Hurt);
 
             //如果动画执行了一遍，就切换到待机
-            if (CurrAnimatorStateInfo.normalizedTime > 1)
+            if (CurrRoleAnimatorStateInfo.normalizedTime > 1)
             {
                 CurrRoleFSMMgr.CurrRoleCtrl.ToIdle();
             }

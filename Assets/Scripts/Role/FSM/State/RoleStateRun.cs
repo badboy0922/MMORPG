@@ -47,10 +47,8 @@ public class RoleStateRun : RoleStateAbstract
     public override void OnUpdate()
     {
         base.OnUpdate();
-
-        CurrAnimatorStateInfo = CurrRoleFSMMgr.CurrRoleCtrl.Animator.GetCurrentAnimatorStateInfo(0);
-
-        if (CurrAnimatorStateInfo.IsName(RoleAnimatorName.Run.ToString()))
+        CurrRoleAnimatorStateInfo = CurrRoleFSMMgr.CurrRoleCtrl.Animator.GetCurrentAnimatorStateInfo(0);
+        if (CurrRoleAnimatorStateInfo.IsName(RoleAnimatorName.Run.ToString()))
         {
             CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.CurrState.ToString(), (int)RoleState.Run);
         }
@@ -59,15 +57,14 @@ public class RoleStateRun : RoleStateAbstract
             CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.CurrState.ToString(), 0);
         }
 
-        //if (Vector3.Distance(CurrRoleFSMMgr.CurrRoleCtrl.TargetPos, CurrRoleFSMMgr.CurrRoleCtrl.transform.position) > 0.1f)
-        if(Vector3.Distance(new Vector3(CurrRoleFSMMgr.CurrRoleCtrl.TargetPos.x, 0, CurrRoleFSMMgr.CurrRoleCtrl.TargetPos.z), new Vector3(CurrRoleFSMMgr.CurrRoleCtrl.transform.position.x, 0, CurrRoleFSMMgr.CurrRoleCtrl.transform.position.z)) > 0.1f)
+        if (Vector3.Distance(new Vector3(CurrRoleFSMMgr.CurrRoleCtrl.TargetPos.x, 0, CurrRoleFSMMgr.CurrRoleCtrl.TargetPos.z), new Vector3(CurrRoleFSMMgr.CurrRoleCtrl.transform.position.x, 0, CurrRoleFSMMgr.CurrRoleCtrl.transform.position.z)) > 0.1f)
         {
             Vector3 direction = CurrRoleFSMMgr.CurrRoleCtrl.TargetPos - CurrRoleFSMMgr.CurrRoleCtrl.transform.position;
-            direction = direction.normalized;//归一化
+            direction = direction.normalized; //归一化
             direction = direction * Time.deltaTime * CurrRoleFSMMgr.CurrRoleCtrl.Speed;
             direction.y = 0;
 
-            //让角色转身
+            //让角色缓慢转身
             if (m_RotationSpeed <= 1)
             {
                 m_RotationSpeed += 10f * Time.deltaTime;
@@ -79,9 +76,10 @@ public class RoleStateRun : RoleStateAbstract
                     m_RotationSpeed = 0;
                 }
             }
+
             CurrRoleFSMMgr.CurrRoleCtrl.CharacterController.Move(direction);
         }
-        else if(Vector3.Distance(CurrRoleFSMMgr.CurrRoleCtrl.TargetPos, CurrRoleFSMMgr.CurrRoleCtrl.transform.position) < 0.1f)
+        else
         {
             CurrRoleFSMMgr.CurrRoleCtrl.ToIdle();
         }
