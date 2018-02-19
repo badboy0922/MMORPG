@@ -18,7 +18,12 @@ public class RoleMonsterAI : IRoleAI
     public RoleCtrl CurrRole { get; set; }
 
     /// <summary>
-    /// 构造函数
+    /// 下次巡逻时间
+    /// </summary>
+    private float m_NextPatrolTime = 0;
+
+    /// <summary>
+    /// 构造函数 
     /// </summary>
     /// <param name="roleCtrl"></param>
     public RoleMonsterAI(RoleCtrl roleCtrl)
@@ -28,6 +33,16 @@ public class RoleMonsterAI : IRoleAI
 
     public void DoAI()
     {
-        //执行AI
+        //如果是待机状态
+        if (CurrRole.CurrRoleFSMMgr.CurrRoleStateEnum == RoleState.Idle)
+        {
+            if (Time.time > m_NextPatrolTime)
+            {
+                m_NextPatrolTime = Time.time + Random.Range(5f, 10f);
+                //进行巡逻
+                CurrRole.MoveTo(new Vector3(CurrRole.BornPoint.x + UnityEngine.Random.Range(CurrRole.PatrolRange * -1, CurrRole.PatrolRange), CurrRole.BornPoint.y, CurrRole.BornPoint.z + UnityEngine.Random.Range(CurrRole.PatrolRange * -1, CurrRole.PatrolRange)));
+            }
+        }
+
     }
 }

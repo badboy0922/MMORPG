@@ -37,10 +37,31 @@ public class RoleCtrl : MonoBehaviour
     public CharacterController CharacterController;
 
     /// <summary>
-    /// 转身速度
+    /// 移动速度
     /// </summary>
     [SerializeField]
     public float Speed = 10f;
+
+    /// <summary>
+    /// 出生点
+    /// </summary>
+    [HideInInspector]
+    public Vector3 BornPoint;
+
+    /// <summary>
+    /// 视野范围
+    /// </summary>
+    public float ViewARange;
+
+    /// <summary>
+    /// 巡逻范围
+    /// </summary>
+    public float PatrolRange;
+
+    /// <summary>
+    /// 攻击范围
+    /// </summary>
+    public float AttackRange;
 
     /// <summary>
     /// 当前角色类型
