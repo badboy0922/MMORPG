@@ -304,6 +304,7 @@
     <Compile Include="Assets\Scripts\Test\BoxCtrl.cs" />
     <Compile Include="Assets\Scripts\UI\LayerUIMgr.cs" />
     <Compile Include="Assets\Scripts\UI\Other\RoleHeadBarRoot.cs" />
+    <Compile Include="Assets\Scripts\UI\Other\UIPlayerInfo.cs" />
     <Compile Include="Assets\Scripts\UI\SceneUICtrl\UISceneCityCtrl.cs" />
     <Compile Include="Assets\Scripts\UI\SceneUICtrl\UISceneLoadingCtrl.cs" />
     <Compile Include="Assets\Scripts\UI\SceneUICtrl\UISceneLogOnCtrl.cs" />

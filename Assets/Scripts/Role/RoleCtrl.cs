@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 /// <summary>
 /// 角色控制器
@@ -77,6 +78,17 @@ public class RoleCtrl : MonoBehaviour
     /// 当前角色AI
     /// </summary>
     public IRoleAI CurrRoleAI = null;
+
+    /// <summary>
+    /// 锁定敌人
+    /// </summary>
+    [HideInInspector]
+    public RoleCtrl LockEnemy;
+
+    /// <summary>
+    /// 角色受伤委托
+    /// </summary>
+    public System.Action OnRoleHurt;
 
     /// <summary>
     /// 当前角色有限状态机管理器
@@ -174,14 +186,46 @@ public class RoleCtrl : MonoBehaviour
 
     public void ToAttack()
     {
+        if (LockEnemy == null) return;
         CurrRoleFSMMgr.ChangeState(RoleState.Attack);
+
+        LockEnemy.ToHurt(100, 0.5f); 
     }
 
-    public void ToHurt()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="attackValue">受到的攻击力</param>
+    /// <param name="delay">延迟时间</param>
+    public void ToHurt(int attackValue, float delay)
     {
-        roleHeadBarCtrl.SetHUDText(10);
+        StartCoroutine(ToHurtCoroutine(attackValue, delay));
+    }
 
-        CurrRoleFSMMgr.ChangeState(RoleState.Hurt);
+
+    private IEnumerator ToHurtCoroutine(int attackValue, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        //计算得出伤害值
+        int hurt = (int)(attackValue * Random.Range(0.5f, 1f));
+        roleHeadBarCtrl.SetHUDText(hurt);
+
+        if (OnRoleHurt != null)
+        {
+            OnRoleHurt();
+        }
+
+        CurrRoleInfo.CurrHP -= hurt;
+
+        if (CurrRoleInfo.CurrHP <= 0)
+        {
+            CurrRoleFSMMgr.ChangeState(RoleState.Die);
+        }
+        else
+        {
+            CurrRoleFSMMgr.ChangeState(RoleState.Hurt);
+        }
     }
 
     public void ToDie()

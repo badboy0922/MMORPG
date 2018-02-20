@@ -1,11 +1,10 @@
-//======================================================
-//作     者：Ning	日   期： 2018-02-14 18:08:35
-//Unity版本：5.6.4f1
-//备     注：攻击状态
-//======================================================
-using System.Collections;
-using System.Collections.Generic;
+//===================================================
+//作    者：边涯  http://www.u3dol.com  QQ群：87481002
+//创建时间：2015-12-12 08:55:30
+//备    注：
+//===================================================
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// 攻击状态
@@ -13,11 +12,12 @@ using UnityEngine;
 public class RoleStateAttack : RoleStateAbstract
 {
     /// <summary>
-    /// 构造方法
+    /// 构造函数
     /// </summary>
     /// <param name="roleFSMMgr">有限状态机管理器</param>
     public RoleStateAttack(RoleFSMMgr roleFSMMgr) : base(roleFSMMgr)
     {
+
     }
 
     /// <summary>
@@ -26,8 +26,12 @@ public class RoleStateAttack : RoleStateAbstract
     public override void OnEnter()
     {
         base.OnEnter();
-
         CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.ToPhyAttack.ToString(), 1);
+
+        if (CurrRoleFSMMgr.CurrRoleCtrl.LockEnemy != null)
+        {
+            CurrRoleFSMMgr.CurrRoleCtrl.transform.LookAt(new Vector3(CurrRoleFSMMgr.CurrRoleCtrl.LockEnemy.transform.position.x, CurrRoleFSMMgr.CurrRoleCtrl.transform.position.y, CurrRoleFSMMgr.CurrRoleCtrl.LockEnemy.transform.position.z));
+        }
     }
 
     /// <summary>
@@ -38,16 +42,19 @@ public class RoleStateAttack : RoleStateAbstract
         base.OnUpdate();
 
         CurrRoleAnimatorStateInfo = CurrRoleFSMMgr.CurrRoleCtrl.Animator.GetCurrentAnimatorStateInfo(0);
-
         if (CurrRoleAnimatorStateInfo.IsName(RoleAnimatorName.PhyAttack1.ToString()))
         {
             CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.CurrState.ToString(), (int)RoleState.Attack);
 
-            //如果动画执行了一遍，就切换到待机
+            //如果动画执行了一遍 就切换待机
             if (CurrRoleAnimatorStateInfo.normalizedTime > 1)
             {
                 CurrRoleFSMMgr.CurrRoleCtrl.ToIdle();
             }
+        }
+        else
+        {
+            CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.CurrState.ToString(), 0);
         }
     }
 

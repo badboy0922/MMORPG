@@ -81,7 +81,7 @@ public class RoleFSMMgr
         //更改当前状态
         m_CurrRoleState = m_RoleStateDic[newState];
 
-        //调用新状态的而进入方法
+        ///调用新状态的进入方法
         m_CurrRoleState.OnEnter();
     }
 }

@@ -23,27 +23,26 @@ public class CitySceneCtrl : MonoBehaviour
         {
             FingerEvent.Instance.OnFingerDrag += OnFingerDrag;
             FingerEvent.Instance.OnZoom += OnZoom;
-            FingerEvent.Instance.OnPlayerClickGround += OnPlayerClickGround;
+            FingerEvent.Instance.OnPlayerClick += OnPlayerClick;
         }
     }
 
     private void Start()
     {
         //加载玩家
-        GameObject obj = RoleMgr.Instance.LoadRole("Rola_MainPlayer", RoleType.MainPlayer);
+        GameObject obj = RoleMgr.Instance.LoadRole("Role_MainPlayer", RoleType.MainPlayer);
         obj.transform.position = m_PlayerBornPos.position;
 
         //给当前玩家赋值
         GlobalInit.Instance.CurrPlayer = obj.GetComponent<RoleCtrl>();
-        GlobalInit.Instance.CurrPlayer.Init(RoleType.MainPlayer, new RoleInfoMainPlayer() { NickName = GlobalInit.Instance.CurrRoleNickName }, new RoleMainPlayerCityAI(GlobalInit.Instance.CurrPlayer));
+        GlobalInit.Instance.CurrPlayer.Init(RoleType.MainPlayer, new RoleInfoBase() { NickName = GlobalInit.Instance.CurrRoleNickName, CurrHP = 10000, MaxHP = 10000 }, new RoleMainPlayerCityAI(GlobalInit.Instance.CurrPlayer));
+
+        UIPlayerInfo.Instance.SetPlayerInfo();
     }
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.H))
-        {
-            GlobalInit.Instance.CurrPlayer.ToHurt();
-        }
+
     }
 
     #region OnZoom OnZoom
@@ -67,21 +66,36 @@ public class CitySceneCtrl : MonoBehaviour
     }
     #endregion
 
-    #region OnPlayerClickGround 玩家点击地面
+    #region OnPlayerClickGround 玩家点击
     /// <summary>
-    /// 玩家点击地面
+    /// 玩家点击
     /// </summary>
-    private void OnPlayerClickGround()
+    private void OnPlayerClick()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
         RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo))
+
+        RaycastHit[] hitArr = Physics.RaycastAll(ray, Mathf.Infinity, 1 << LayerMask.NameToLayer("Role"));
+        if (hitArr.Length > 0)
         {
-            if (hitInfo.collider.gameObject.name.Equals("Ground", System.StringComparison.CurrentCultureIgnoreCase))
+            RoleCtrl hitRole = hitArr[0].collider.gameObject.GetComponent<RoleCtrl>();
+            if (hitRole.CurrRoleType == RoleType.Monster)
             {
-                if (GlobalInit.Instance.CurrPlayer != null)
+                GlobalInit.Instance.CurrPlayer.LockEnemy = hitRole;
+            }
+        }
+        else
+        {
+            if (Physics.Raycast(ray, out hitInfo))
+            {
+                if (hitInfo.collider.gameObject.name.Equals("Ground", System.StringComparison.CurrentCultureIgnoreCase))
                 {
-                    GlobalInit.Instance.CurrPlayer.MoveTo(hitInfo.point);
+                    if (GlobalInit.Instance.CurrPlayer != null)
+                    {
+                        GlobalInit.Instance.CurrPlayer.LockEnemy = null;
+                        GlobalInit.Instance.CurrPlayer.MoveTo(hitInfo.point);
+                    }
                 }
             }
         }
@@ -125,7 +139,7 @@ public class CitySceneCtrl : MonoBehaviour
         {
             FingerEvent.Instance.OnFingerDrag -= OnFingerDrag;
             FingerEvent.Instance.OnZoom -= OnZoom;
-            FingerEvent.Instance.OnPlayerClickGround -= OnPlayerClickGround;
+            FingerEvent.Instance.OnPlayerClick -= OnPlayerClick;
         }
     }
     #endregion
