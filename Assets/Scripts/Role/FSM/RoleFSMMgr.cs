@@ -49,7 +49,6 @@ public class RoleFSMMgr
         }
     }
 
-
     #region OnUpdate 每帧执行
     /// <summary>
     /// 每帧执行

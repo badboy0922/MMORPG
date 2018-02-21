@@ -53,7 +53,7 @@ public class RoleMonsterAI : IRoleAI
                 }
             }
             //如果主角在怪的视野范围内
-            if (Vector3.Distance(CurrRole.transform.position, GlobalInit.Instance.CurrPlayer.transform.position) <= CurrRole.ViewARange)
+            if (Vector3.Distance(CurrRole.transform.position, GlobalInit.Instance.CurrPlayer.transform.position) <= CurrRole.ViewRange)
             {
                 CurrRole.LockEnemy = GlobalInit.Instance.CurrPlayer;
             }
@@ -67,7 +67,7 @@ public class RoleMonsterAI : IRoleAI
             }
             //如果有锁定的敌人
             //1.如果我和锁定的敌人距离，超过了视野范围，取消锁定
-            if (Vector3.Distance(CurrRole.transform.position, GlobalInit.Instance.CurrPlayer.transform.position) > CurrRole.ViewARange)
+            if (Vector3.Distance(CurrRole.transform.position, GlobalInit.Instance.CurrPlayer.transform.position) > CurrRole.ViewRange)
             {
                 CurrRole.LockEnemy = null;
                 return;

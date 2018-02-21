@@ -58,8 +58,16 @@ public class MonsterCreatPoint : MonoBehaviour
 
                 roleCtrl.Init(RoleType.Monster, roleInfo, new RoleMonsterAI(roleCtrl));
 
+                roleCtrl.OnRoleDie = RoleDie;
+
                 m_CurrCount++;
             }
         }
+    }
+
+    private void RoleDie(RoleCtrl obj)
+    {
+        m_CurrCount--;
+        Destroy(obj.gameObject);
     }
 }

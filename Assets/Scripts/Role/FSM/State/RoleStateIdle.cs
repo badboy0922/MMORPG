@@ -13,11 +13,12 @@ using UnityEngine;
 public class RoleStateIdle : RoleStateAbstract
 {
     /// <summary>
-    /// 构造方法
+    /// 构造函数
     /// </summary>
     /// <param name="roleFSMMgr">有限状态机管理器</param>
     public RoleStateIdle(RoleFSMMgr roleFSMMgr) : base(roleFSMMgr)
     {
+
     }
 
     /// <summary>
@@ -26,7 +27,6 @@ public class RoleStateIdle : RoleStateAbstract
     public override void OnEnter()
     {
         base.OnEnter();
-
         CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetBool(ToAnimatorCondition.ToIdleFight.ToString(), true);
     }
 
@@ -38,7 +38,6 @@ public class RoleStateIdle : RoleStateAbstract
         base.OnUpdate();
 
         CurrRoleAnimatorStateInfo = CurrRoleFSMMgr.CurrRoleCtrl.Animator.GetCurrentAnimatorStateInfo(0);
-
         if (CurrRoleAnimatorStateInfo.IsName(RoleAnimatorName.Idle_Fight.ToString()))
         {
             CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.CurrState.ToString(), (int)RoleState.Idle);
@@ -51,7 +50,6 @@ public class RoleStateIdle : RoleStateAbstract
     public override void OnLeave()
     {
         base.OnLeave();
-
         CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetBool(ToAnimatorCondition.ToIdleFight.ToString(), false);
     }
 }

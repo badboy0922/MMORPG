@@ -12,15 +12,12 @@ using UnityEngine;
 /// </summary>
 public class RoleMainPlayerCityAI : IRoleAI
 {
-    /// <summary>
-    /// 当前角色控制器
-    /// </summary>
-    public RoleCtrl CurrRole { get; set; }
+    public RoleCtrl CurrRole
+    {
+        get;
+        set;
+    }
 
-    /// <summary>
-    /// 构造函数
-    /// </summary>
-    /// <param name="roleCtrl"></param>
     public RoleMainPlayerCityAI(RoleCtrl roleCtrl)
     {
         CurrRole = roleCtrl;
@@ -30,7 +27,7 @@ public class RoleMainPlayerCityAI : IRoleAI
     {
         //执行AI
 
-        //1.如果我有锁定敌人 就进行攻击
+        //1.如果我有锁定敌人 就行攻击
         if (CurrRole.LockEnemy != null)
         {
             if (CurrRole.LockEnemy.CurrRoleInfo.CurrHP <= 0)

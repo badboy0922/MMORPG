@@ -25,7 +25,7 @@ public class RoleHeadBarCtrl : MonoBehaviour
     /// 血条
     /// </summary>
     [SerializeField]
-    private UISlider bpHP;
+    private UISlider pbHP;
 
     /// <summary>
     /// 对齐的目标点
@@ -44,7 +44,7 @@ public class RoleHeadBarCtrl : MonoBehaviour
 
     void Update()
     {
-        if (Camera.main == null || UICamera.mainCamera == null) return;
+        if (Camera.main == null || UICamera.mainCamera == null || m_Target == null) return;
         //世界坐标点转换为视口坐标点
         Vector3 pos = Camera.main.WorldToViewportPoint(m_Target.position);
 
@@ -65,15 +65,16 @@ public class RoleHeadBarCtrl : MonoBehaviour
         m_Target = target;
         lblNickName.text = nickName;
 
-        NGUITools.SetActive(bpHP.gameObject, isShowHPBar);
+        NGUITools.SetActive(pbHP.gameObject, isShowHPBar);
     }
 
     /// <summary>
     /// 上弹伤害文字
     /// </summary>
     /// <param name="hurtValue"></param>
-    public void SetHUDText(int hurtValue)
+    public void Hurt(int hurtValue, float pbHPValue = 0)
     {
         hudText.Add(string.Format("-{0}", hurtValue), Color.red, 0.1f);
+        pbHP.value = pbHPValue;
     }
 }
