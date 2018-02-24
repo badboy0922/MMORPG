@@ -228,8 +228,6 @@ public class RoleCtrl : MonoBehaviour
 
         CurrRoleInfo.CurrHP -= hurt;
 
-        Debug.Log(CurrRoleInfo.CurrHP);
-
 
         roleHeadBarCtrl.Hurt(hurt, (float)CurrRoleInfo.CurrHP / CurrRoleInfo.MaxHP);
 
