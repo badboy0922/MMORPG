@@ -1663,7 +1663,7 @@ static public class NGUITools
 		{
 			TextEditor te = new TextEditor();
 #if UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2
-			te.content = new GUIContent(value);
+            te.content = new GUIContent(value);
 #else
 			te.text = value;
 #endif

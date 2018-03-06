@@ -1,0 +1,17 @@
+﻿<Properties StartupConfiguration="{DE0A4DA5-7100-4ECF-ADB5-86F6888C4D50}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ExcellReader/MainForm.cs">
+    <Files>
+      <File FileName="ExcellReader/GameDataParser.cs" Line="1" Column="1" />
+      <File FileName="ExcellReader/Game_MemoryStream.cs" Line="1" Column="1" />
+      <File FileName="ExcellReader/ZlibHelper.cs" Line="1" Column="1" />
+      <File FileName="ExcellReader/XorScaleMgr.cs" Line="1" Column="1" />
+      <File FileName="ExcellReader/MainForm.cs" Line="375" Column="9" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>
