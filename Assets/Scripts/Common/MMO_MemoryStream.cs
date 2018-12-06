@@ -1,26 +1,25 @@
-//======================================================
-//ä½œ     è€…ï¼šNing	æ—¥   æœŸï¼š 2018-03-01 01:14:42
-//Unityç‰ˆæœ¬ï¼š5.6.4f1
-//å¤‡     æ³¨ï¼š
-//======================================================
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
-using System;
 using System.Text;
+using UnityEngine;
+using System.IO;
 
-/// <summary>
-/// æ•°æ®è½¬æ¢ï¼ˆbyte short int long float decimal bool stringï¼‰
-/// </summary>
 public class MMO_MemoryStream : MemoryStream
 {
-    public MMO_MemoryStream() { }
-    public MMO_MemoryStream(byte[] buffer) : base(buffer) { }
+    public MMO_MemoryStream()
+    {
+
+    }
+
+    public MMO_MemoryStream(byte[] buffer) : base(buffer)
+    {
+
+    }
 
     #region Short
     /// <summary>
-    /// ä»æµä¸­è¯»å–ä¸€ä¸ªshortæ•°æ®
+    /// ´ÓÁ÷ÖĞ¶ÁÈ¡Ò»¸öshortÊı¾İ
     /// </summary>
     /// <returns></returns>
     public short ReadShort()
@@ -31,7 +30,7 @@ public class MMO_MemoryStream : MemoryStream
     }
 
     /// <summary>
-    /// æŠŠä¸€ä¸ªshortæ•°æ®å†™å…¥æµä¸­
+    /// °ÑÒ»¸öshortÊı¾İĞ´ÈëÁ÷
     /// </summary>
     /// <param name="value"></param>
     public void WriteShort(short value)
@@ -43,7 +42,7 @@ public class MMO_MemoryStream : MemoryStream
 
     #region UShort
     /// <summary>
-    /// ä»æµä¸­è¯»å–ä¸€ä¸ªushortæ•°æ®
+    /// ´ÓÁ÷ÖĞ¶ÁÈ¡Ò»¸öushortÊı¾İ
     /// </summary>
     /// <returns></returns>
     public ushort ReadUShort()
@@ -54,7 +53,7 @@ public class MMO_MemoryStream : MemoryStream
     }
 
     /// <summary>
-    /// æŠŠä¸€ä¸ªushortæ•°æ®å†™å…¥æµä¸­
+    /// °ÑÒ»¸öushortÊı¾İĞ´ÈëÁ÷
     /// </summary>
     /// <param name="value"></param>
     public void WriteUShort(ushort value)
@@ -66,7 +65,7 @@ public class MMO_MemoryStream : MemoryStream
 
     #region Int
     /// <summary>
-    /// ä»æµä¸­è¯»å–ä¸€ä¸ªintæ•°æ®
+    /// ´ÓÁ÷ÖĞ¶ÁÈ¡Ò»¸öintÊı¾İ
     /// </summary>
     /// <returns></returns>
     public int ReadInt()
@@ -77,7 +76,7 @@ public class MMO_MemoryStream : MemoryStream
     }
 
     /// <summary>
-    /// æŠŠä¸€ä¸ªintæ•°æ®å†™å…¥æµä¸­
+    /// °ÑÒ»¸öintÊı¾İĞ´ÈëÁ÷
     /// </summary>
     /// <param name="value"></param>
     public void WriteInt(int value)
@@ -89,7 +88,7 @@ public class MMO_MemoryStream : MemoryStream
 
     #region UInt
     /// <summary>
-    /// ä»æµä¸­è¯»å–ä¸€ä¸ªuintæ•°æ®
+    /// ´ÓÁ÷ÖĞ¶ÁÈ¡Ò»¸öuintÊı¾İ
     /// </summary>
     /// <returns></returns>
     public uint ReadUInt()
@@ -100,10 +99,10 @@ public class MMO_MemoryStream : MemoryStream
     }
 
     /// <summary>
-    /// æŠŠä¸€ä¸ªuintæ•°æ®å†™å…¥æµä¸­
+    /// °ÑÒ»¸öuintÊı¾İĞ´ÈëÁ÷
     /// </summary>
     /// <param name="value"></param>
-    public void WriteUInt(short value)
+    public void WriteUInt(uint value)
     {
         byte[] arr = BitConverter.GetBytes(value);
         base.Write(arr, 0, arr.Length);
@@ -112,7 +111,7 @@ public class MMO_MemoryStream : MemoryStream
 
     #region Long
     /// <summary>
-    /// ä»æµä¸­è¯»å–ä¸€ä¸ªlongæ•°æ®
+    /// ´ÓÁ÷ÖĞ¶ÁÈ¡Ò»¸ölongÊı¾İ
     /// </summary>
     /// <returns></returns>
     public long ReadLong()
@@ -123,7 +122,7 @@ public class MMO_MemoryStream : MemoryStream
     }
 
     /// <summary>
-    /// æŠŠä¸€ä¸ªlongæ•°æ®å†™å…¥æµä¸­
+    /// °ÑÒ»¸ölongÊı¾İĞ´ÈëÁ÷
     /// </summary>
     /// <param name="value"></param>
     public void WriteLong(long value)
@@ -135,18 +134,18 @@ public class MMO_MemoryStream : MemoryStream
 
     #region ULong
     /// <summary>
-    /// ä»æµä¸­è¯»å–ä¸€ä¸ªulongæ•°æ®
+    /// ´ÓÁ÷ÖĞ¶ÁÈ¡Ò»¸öulongÊı¾İ
     /// </summary>
     /// <returns></returns>
     public ulong ReadULong()
     {
-        byte[] arr = new byte[8];
-        base.Read(arr, 0, 8);
+        byte[] arr = new byte[4];
+        base.Read(arr, 0, 4);
         return BitConverter.ToUInt64(arr, 0);
     }
 
     /// <summary>
-    /// æŠŠä¸€ä¸ªuintæ•°æ®å†™å…¥æµä¸­
+    /// °ÑÒ»¸öulongÊı¾İĞ´ÈëÁ÷
     /// </summary>
     /// <param name="value"></param>
     public void WriteULong(ulong value)
@@ -158,7 +157,7 @@ public class MMO_MemoryStream : MemoryStream
 
     #region Float
     /// <summary>
-    /// ä»æµä¸­è¯»å–ä¸€ä¸ªfloatæ•°æ®
+    /// ´ÓÁ÷ÖĞ¶ÁÈ¡Ò»¸öfloatÊı¾İ
     /// </summary>
     /// <returns></returns>
     public float ReadFloat()
@@ -169,7 +168,7 @@ public class MMO_MemoryStream : MemoryStream
     }
 
     /// <summary>
-    /// æŠŠä¸€ä¸ªfloatæ•°æ®å†™å…¥æµä¸­
+    /// °ÑÒ»¸öfloatÊı¾İĞ´ÈëÁ÷
     /// </summary>
     /// <param name="value"></param>
     public void WriteFloat(float value)
@@ -181,7 +180,7 @@ public class MMO_MemoryStream : MemoryStream
 
     #region Double
     /// <summary>
-    /// ä»æµä¸­è¯»å–ä¸€ä¸ªdoubleæ•°æ®
+    /// ´ÓÁ÷ÖĞ¶ÁÈ¡Ò»¸ödoubleÊı¾İ
     /// </summary>
     /// <returns></returns>
     public double ReadDouble()
@@ -192,7 +191,7 @@ public class MMO_MemoryStream : MemoryStream
     }
 
     /// <summary>
-    /// æŠŠä¸€ä¸ªdoubleæ•°æ®å†™å…¥æµä¸­
+    /// °ÑÒ»¸ödoubleÊı¾İĞ´ÈëÁ÷
     /// </summary>
     /// <param name="value"></param>
     public void WriteDouble(double value)
@@ -204,7 +203,7 @@ public class MMO_MemoryStream : MemoryStream
 
     #region Bool
     /// <summary>
-    /// ä»æµä¸­è¯»å–ä¸€ä¸ªboolæ•°æ®
+    /// ´ÓÁ÷ÖĞ¶ÁÈ¡Ò»¸öboolÊı¾İ
     /// </summary>
     /// <returns></returns>
     public bool ReadBool()
@@ -213,7 +212,7 @@ public class MMO_MemoryStream : MemoryStream
     }
 
     /// <summary>
-    /// æŠŠä¸€ä¸ªboolæ•°æ®å†™å…¥æµä¸­
+    /// °ÑÒ»¸öboolÊı¾İĞ´ÈëÁ÷
     /// </summary>
     /// <param name="value"></param>
     public void WriteBool(bool value)
@@ -224,7 +223,7 @@ public class MMO_MemoryStream : MemoryStream
 
     #region UTF8String
     /// <summary>
-    /// ä»æµä¸­è¯»å–ä¸€ä¸ªstringæ•°æ®
+    /// ´ÓÁ÷ÖĞ¶ÁÈ¡Ò»¸östingÊı×é
     /// </summary>
     /// <returns></returns>
     public string ReadUTF8String()
@@ -236,15 +235,17 @@ public class MMO_MemoryStream : MemoryStream
     }
 
     /// <summary>
-    /// æŠŠä¸€ä¸ªstringæ•°æ®å†™å…¥æµ
+    /// °ÑÒ»¸östringÊı¾İĞ´ÈëÁ÷
     /// </summary>
     /// <param name="str"></param>
     public void WriteUTF8String(string str)
     {
+        if (str == null) str = string.Empty;
+
         byte[] arr = Encoding.UTF8.GetBytes(str);
         if (arr.Length > 65535)
         {
-            throw new InvalidCastException("å­—ç¬¦ä¸²è¶…å‡ºèŒƒå›´");
+            throw new InvalidCastException("×Ö·û´®³¬³ö·¶Î§");
         }
         WriteUShort((ushort)arr.Length);
         base.Write(arr, 0, arr.Length);

@@ -1,9 +1,12 @@
+using System.Collections;
 using ComponentAce.Compression.Libs.zlib;
-using System;
-using System.Collections.Generic;
 using System.IO;
+using System;
 
-class ZlibHelper
+/// <summary>
+/// 压缩帮助类
+/// </summary>
+public class ZlibHelper
 {
     #region CompressBytes 对原始字节数组进行zlib压缩，得到处理结果字节数组
     /// <summary>
@@ -26,7 +29,7 @@ class ZlibHelper
                     {
                         CopyStream(OrgStream, outZStream);
                         outZStream.finish();//重要！否则结果数据不完整！
-                                            //程序执行到这里，CompressedStream就是压缩后的数据
+                        //程序执行到这里，CompressedStream就是压缩后的数据
                         if (CompressedStream == null) return null;
 
                         return CompressedStream.ToArray();
@@ -64,7 +67,7 @@ class ZlibHelper
                         //-----------------------
                         CopyStream(CompressedStream, outZStream);
                         outZStream.finish();//重要！
-                                            //程序执行到这里，OrgStream就是解压缩后的数据
+                        //程序执行到这里，OrgStream就是解压缩后的数据
 
                         if (OrgStream == null)
                         {
@@ -115,7 +118,7 @@ class ZlibHelper
         byte[] byteDecompress = DeCompressBytes(byteSource);
         if (byteDecompress != null)
         {
-
+            
             return System.Text.Encoding.UTF8.GetString(byteDecompress);
         }
         else
@@ -155,4 +158,3 @@ class ZlibHelper
     }
     #endregion
 }
-

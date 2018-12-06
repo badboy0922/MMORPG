@@ -2,12 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-class GameDataTableParser : IDisposable
+public class GameDataTableParser : IDisposable
 {
-    #region 异或因子
-    private byte[] xorScale = new byte[] { 88, 55, 66, 99, 11, 22, 5, 15, 23, 48, 61, 111, 85, 53, 73, 64, 22, 3, 74, 65 };
-    #endregion
-
     #region GameDataTableParser 构造函数
     /// <summary>
     /// 构造函数
@@ -35,11 +31,7 @@ class GameDataTableParser : IDisposable
         //------------------
         //第3步：xor解密
         //------------------
-        int iScaleLen = xorScale.Length;
-        for (int i = 0; i < buffer.Length; i++)
-        {
-            buffer[i] = (byte)(buffer[i] ^ xorScale[i % iScaleLen]);
-        }
+        SecurityUtil.Xor(buffer);
 
         //------------------
         //第4步：解析数据到数组
@@ -125,8 +117,6 @@ class GameDataTableParser : IDisposable
             return m_CurRowNo == m_Row;
         }
     }
-
-
     #endregion
 
     #region Next 转到下一条
@@ -170,5 +160,4 @@ class GameDataTableParser : IDisposable
         m_GameData = null;
     }
     #endregion
-
 }

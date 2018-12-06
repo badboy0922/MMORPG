@@ -1,14 +1,17 @@
-//======================================================
-//作     者：Ning	日   期： 2018-02-10 19:46:33
-//Unity版本：5.6.4f1
-//备     注：
-//======================================================
-using System.Collections;
-using System.Collections.Generic;
+//===================================================
+//作    者：边涯  http://www.u3dol.com  QQ群：87481002
+//创建时间：2015-12-01 22:26:02
+//备    注：
+//===================================================
 using UnityEngine;
+using System.Collections;
 
-public class GlobalInit : MonoBehaviour
+public class GlobalInit : SingletonMono<GlobalInit> 
 {
+    public delegate void OnReceiveProtoHandler(ushort protoCode, byte[] buffer);
+    //定义委托
+    public OnReceiveProtoHandler OnReceiveProto;
+
     #region 常量
     /// <summary>
     /// 昵称KEY
@@ -20,13 +23,21 @@ public class GlobalInit : MonoBehaviour
     /// </summary>
     public const string MMO_PWD = "MMO_PWD";
 
+    /// <summary>
+    /// 账户服务器地址
+    /// </summary>
+    public const string WebAccountUrl = "http://192.168.2.110:8080/";
+
+    public const string SocketIP = "192.168.2.110";
+
+    public const ushort Port = 1011;
     #endregion
 
-    public static GlobalInit Instance;
 
     /// <summary>
     /// 玩家注册时候的昵称
     /// </summary>
+    [HideInInspector]
     public string CurrRoleNickName;
 
     /// <summary>
@@ -40,16 +51,13 @@ public class GlobalInit : MonoBehaviour
     /// </summary>
     public AnimationCurve UIAnimationCurve = new AnimationCurve(new Keyframe(0f, 0f, 0f, 1f), new Keyframe(1f, 1f, 1f, 0f));
 
-
-    private void Awake()
+    void Awake()
     {
-        Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
-    void Start()
-    {
-
-    }
-
+	void Start ()
+	{
+	
+	}
 }

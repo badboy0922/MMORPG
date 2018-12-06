@@ -1,8 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// 场景管理器
+/// </summary>
 public class SceneMgr : Singleton<SceneMgr>
 {
     /// <summary>
@@ -13,11 +15,14 @@ public class SceneMgr : Singleton<SceneMgr>
         get;
         private set;
     }
+
     public void LoadToLogOn()
     {
         CurrentSceneType = SceneType.LogOn;
+        
         SceneManager.LoadScene("Scene_Loading");
     }
+
     /// <summary>
     /// 去城镇场景
     /// </summary>
